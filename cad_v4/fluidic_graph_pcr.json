@@ -1,0 +1,106 @@
+{
+  "standard": "BonFlow-Open-v4.0-PCR",
+  "layout": "linear_1x9_rail",
+  "mechanical_grid": {
+    "pitch_mm": 25.0,
+    "baseplate_mm": [
+      466.0,
+      68.0,
+      5.0
+    ],
+    "hole_array": "18x2 \u00d86.5mm",
+    "standoff_type": "M3 Hex Standoff 10.0mm",
+    "port_interface": "Vertical Press-Fit \u00d83.0mm Reamed Lid + OD 3.2/ID 1.5mm Silicone Sleeve + Retainer + OD 1.6mm FEP"
+  },
+  "modules": [
+    {
+      "id": "elec_1u",
+      "slot": [
+        -200.0,
+        0.0
+      ],
+      "controller": "Seeed_XIAO_ESP32S3",
+      "zones": 3
+    },
+    {
+      "id": "mix_1u",
+      "slot": [
+        -150.0,
+        0.0
+      ],
+      "wetted_materials": [
+        "PMMA",
+        "Silicone"
+      ]
+    },
+    {
+      "id": "valve_in_1u",
+      "slot": [
+        -100.0,
+        0.0
+      ],
+      "role": "Upstream_Backflow_Lock_95C"
+    },
+    {
+      "id": "thermo_95_1u",
+      "slot": [
+        -50.0,
+        0.0
+      ],
+      "target_temp_C": 95,
+      "role": "Denaturation"
+    },
+    {
+      "id": "valve_out_1u",
+      "slot": [
+        0.0,
+        0.0
+      ],
+      "role": "Downstream_Pressure_Lock_95C"
+    },
+    {
+      "id": "thermo_58_1u",
+      "slot": [
+        50.0,
+        0.0
+      ],
+      "target_temp_C": 58,
+      "role": "Annealing"
+    },
+    {
+      "id": "thermo_72_1u",
+      "slot": [
+        100.0,
+        0.0
+      ],
+      "target_temp_C": 72,
+      "role": "Extension"
+    },
+    {
+      "id": "sense_1u",
+      "slot": [
+        150.0,
+        0.0
+      ],
+      "sensor": "TCS34725_I2C"
+    },
+    {
+      "id": "drip_1u",
+      "slot": [
+        200.0,
+        0.0
+      ],
+      "bpr_adjustable": true,
+      "collector": "1.5mL_Microtube"
+    }
+  ],
+  "default_topology": [
+    "mix_1u.E -> valve_in_1u.IN",
+    "valve_in_1u.OUT -> thermo_95_1u.IN",
+    "thermo_95_1u.OUT -> valve_out_1u.IN",
+    "valve_out_1u.OUT -> thermo_58_1u.IN",
+    "thermo_58_1u.OUT -> thermo_72_1u.IN",
+    "thermo_72_1u.OUT -> sense_1u.IN",
+    "sense_1u.OUT -> drip_1u.IN"
+  ]
+}

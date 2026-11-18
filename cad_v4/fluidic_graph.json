@@ -1,0 +1,92 @@
+{
+  "standard": "BonFlow-Open-v4.0",
+  "layout": "linear_1x6_rail",
+  "mechanical_grid": {
+    "pitch_mm": 25.0,
+    "baseplate_hole_diameter_mm": 6.5,
+    "standoff_type": "M3 Hex Standoff 10.0mm",
+    "port_interface": "Vertical Press-Fit \u00d83.0mm Reamed Lid + OD 3.2/ID 1.5mm Silicone Sleeve + Retainer + OD 1.6mm FEP"
+  },
+  "modules": [
+    {
+      "id": "elec_1u",
+      "slot": [
+        -125.0,
+        0.0
+      ],
+      "controller": "Seeed_XIAO_ESP32S3",
+      "bus": "I2C_3.3V_USBSerial_JSON"
+    },
+    {
+      "id": "valve_1u",
+      "slot": [
+        -75.0,
+        0.0
+      ],
+      "wetted_materials": [
+        "PMMA",
+        "Silicone",
+        "PP_Stopcock"
+      ],
+      "internal_volume_uL": 145.0
+    },
+    {
+      "id": "mix_1u",
+      "slot": [
+        -25.0,
+        0.0
+      ],
+      "wetted_materials": [
+        "PMMA",
+        "Silicone"
+      ],
+      "internal_volume_uL": 164.6
+    },
+    {
+      "id": "thermo_1u",
+      "slot": [
+        25.0,
+        0.0
+      ],
+      "wetted_materials": [
+        "FEP"
+      ],
+      "internal_volume_uL": 240.0,
+      "temp_range_C": [
+        25,
+        95
+      ]
+    },
+    {
+      "id": "sense_1u",
+      "slot": [
+        75.0,
+        0.0
+      ],
+      "wetted_materials": [
+        "FEP"
+      ],
+      "internal_volume_uL": 18.0,
+      "sensor": "TCS34725_I2C"
+    },
+    {
+      "id": "drip_1u",
+      "slot": [
+        125.0,
+        0.0
+      ],
+      "wetted_materials": [
+        "FEP",
+        "Silicone",
+        "PP_Microtube"
+      ],
+      "bpr_adjustable": true
+    }
+  ],
+  "default_topology": [
+    "valve_1u.OUT -> mix_1u.W",
+    "mix_1u.E -> thermo_1u.IN",
+    "thermo_1u.OUT -> sense_1u.IN",
+    "sense_1u.OUT -> drip_1u.IN"
+  ]
+}
